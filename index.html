@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="FantasyHSI: Video-Generation-Centric 4D Human Synthesis In Any Scene through A Graph-based Multi-Agent Framework">
+  <meta name="keywords" content="HSI, Video Generation, Agents">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- More research下拉菜单 开始 -->
+  <div style="width:100%; display: flex; justify-content: center; align-items: center; margin-top: 20px; position: relative; z-index: 100;">
+    <div style="position: relative; display:inline-block;">
+      <button id="moreResearchBtn" style="background-color: #fff; color: #333; padding: 10px 24px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; cursor: pointer;">
+        More research ▼
+      </button>
+      <div id="moreResearchDropdown" style="display: none; position: absolute; left: 0; top: 110%; background: #fff; border: 1px solid #ccc; border-radius: 5px; box-shadow:0 6px 12px rgba(0,0,0,0.1); min-width: 180px; z-index: 999;">
+        <a href="https://fantasy-amap.github.io/fantasy-id/" target="_blank" style="display:block; padding:12px 18px; color:#333; text-decoration:none;">FantasyID</a>
+        <a href="https://fantasy-amap.github.io/fantasy-talking/" target="_blank" style="display:block; padding:12px 18px; color:#333; text-decoration:none;">FantasyTalking</a>
+        <a href="https://fantasy-amap.github.io/fantasy-portrait/" target="_blank" style="display:block; padding:12px 18px; color:#333; text-decoration:none;">FantasyPortrait</a>
+        <a href="https://fantasy-amap.github.io/fantasy-talking2/" target="_blank" style="display:block; padding:12px 18px; color:#333; text-decoration:none;">FantasyTalking2</a>
+        <a href="https://fantasy-amap.github.io/fantasy-hsi/" target="_blank" style="display:block; padding:12px 18px; color:#333; text-decoration:none;">FantasyHSI</a>
+      </div>
+    </div>
+  </div>
+  <!-- More research下拉菜单 结束 -->
+  <script>
+    // 简单的下拉菜单JS逻辑
+    const btn = document.getElementById('moreResearchBtn');
+    const menu = document.getElementById('moreResearchDropdown');
+    btn.onclick = function(e) {
+      e.stopPropagation();
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    };
+    // 点击别处隐藏菜单
+    document.body.addEventListener('click', function() {
+      menu.style.display = 'none';
+    });
+  </script>
+
+  <title>FantasyHSI: Video-Generation-Centric 4D Human Synthesis In Any Scene through A Graph-based Multi-Agent Framework</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <style>
+    /* Dark theme styles */
+    body {
+      background-color:  #0a0a0a;
+      color: #ffffff;
+    }
+    .title, .subtitle, .content, .publication-title {
+      color: #ffffff !important;
+    }
+    .hero.is-light {
+      background-color: #1a1a1a !important;
+      color: #ffffff !important;
+    }
+    .section {
+      background-color: #0a0a0a;
+    }
+    .footer {
+      background-color: #1a1a1a;
+      color: #ffffff;
+    }
+    .content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+      color: #ffffff;
+    }
+    pre {
+      background-color: #1a1a1a;
+      color: #ffffff;
+    }
+    code {
+      background-color: #2a2a2a;
+      color: #ffffff;
+    }
+    .has-text-justified {
+      color: #ffffff;
+    }
+    .hero {
+      margin-top: 10rem;
+      background-color: #0a0a0a !important;
+    }
+    .hero-transparent {
+      position: relative;
+      z-index: 2;
+      margin-top: 0vh;
+      background-color: transparent !important;
+    }
+    .hero, .hero-body, .hero.is-small {
+      background-color: #0a0a0a !important;
+    }
+    html {
+      background-color: #0a0a0a !important;
+    }
+    .column-spacing {
+      margin: 0 2rem !important;
+    }
+    .video-description {
+      min-height: 4.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+    .prompt-wrap {
+      position: relative;
+    }
+
+    .prompt {
+      max-width: calc(100% - 20px);
+      position: absolute;
+      background: rgba(0,0,0,0.1);
+      color: rgba(255,255,255,0.9);
+      font-size: 12px;
+      backdrop-filter: blur(10px);
+      bottom: 10px;
+      left: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 10;
+      line-height: 1.4;
+      
+    }
+
+    .prompt-wrap:hover .prompt {
+      opacity: 1;
+      pointer-events: all;
+    }
+  </style>
+  
+  <style>
+    .carousel {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+      font-size: 0; /* Remove any potential inline-block spacing */
+    }
+    
+    .carousel::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+
+    .prompt-wrap-main {
+      flex: 0 0 auto;
+      height: 180px;
+      position: relative;
+      font-size: 16px; /* Reset font size for content */
+      display: flex; /* Use flexbox to center the video */
+      justify-content: center; /* Center horizontally */
+      align-items: center; /* Center vertically */
+    }
+
+    .prompt-wrap-main video {
+      height: 100%;
+      width: auto;
+      object-fit: contain;
+      display: block; /* Remove any potential inline spacing */
+      margin: 0; /* Remove any margins */
+    }
+
+    .results-carousel {
+      padding: 0;
+      white-space: nowrap; /* Prevent wrapping */
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero-transparent">
+    <div class="column has-text-centered" style="margin-top: 0rem; ">
+      <h1 class="title is-1 publication-title mb-1" style="background: transparent !important; text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.8); color: white;">FantasyHSI</h1>
+      <h2 class="subtitle has-text-centered mt-1" style="background: transparent !important; color: white;">Video-Generation-Centric 4D Human Synthesis In Any Scene through A Graph-based Multi-Agent Framework</h2>
+      
+      <!-- 作者列表 -->
+      <div class="is-size-5 publication-authors" style="background: transparent !important; ">
+        <span class="author-block" style="background: transparent !important;">
+          <a href="https://github.com/Fantasy-AMAP" style="background: transparent !important; color: white;">Lingzhou Mu</a><sup style="color: white;">*,1,2&nbsp;&nbsp;&nbsp;&nbsp;</sup>
+        </span>
+        <span class="author-block" style="background: transparent !important;">
+          <a href="https://github.com/wangqiang9" style="background: transparent !important; color: white;">Qiang Wang</a><sup style="color: white;">*,1&nbsp;&nbsp;&nbsp;&nbsp;</sup>
+        </span>
+        <span class="author-block" style="background: transparent !important;">
+          <a href="https://github.com/frankjiang" style="background: transparent !important; color: white;">Fan Jiang</a><sup style="color: white;">†,1&nbsp;&nbsp;&nbsp;&nbsp;</sup>
+        </span>
+        <span class="author-block" style="background: transparent !important;">
+          <a href="https://github.com/chaochao0" style="background: transparent !important; color: white;">Mengchao Wang</a><sup style="color: white;">1&nbsp;&nbsp;&nbsp;&nbsp;</sup>
+        </span>
+        <span class="author-block" style="background: transparent !important;">
+          <a href="https://github.com/Fantasy-AMAP" style="background: transparent !important; color: white;">Yaqi Fan</a><sup style="color: white;">3&nbsp;&nbsp;&nbsp;&nbsp;</sup>
+        </span>
+        <span class="author-block" style="background: transparent !important;">
+          <a href="https://github.com/Fantasy-AMAP" style="background: transparent !important; color: white;">Mu Xu</a><sup style="color: white;">1&nbsp;&nbsp;&nbsp;&nbsp;</sup>
+        </span>
+        <span class="author-block" style="background: transparent !important;">
+          <a href="https://www.sigs.tsinghua.edu.cn/zk/main.htm" style="background: transparent !important; color: white;">Kai Zhang</a><sup style="color: white;">✉,2&nbsp;&nbsp;&nbsp;&nbsp;</sup>
+        </span>
+      </div>  
+  
+      <!-- 单位列表 -->
+      <div class="is-size-5 publication-authors" style="background: transparent !important;">
+        <span class="author-block" style="background: transparent !important; color: white;"><sup style="color: white;">1</sup>AMAP, Alibaba Group&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span class="author-block" style="background: transparent !important; color: white;"><sup style="color: white;">2</sup>Tsinghua University&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span class="author-block" style="background: transparent !important; color: white;"><sup style="color: white;">3</sup>Beijing University of Posts and Telecommunications</span>
+      </div>
+  
+      <!-- 符号说明 -->
+      <div class="is-size-5 publication-authors" style="background: transparent !important;">
+        <span class="author-block" style="background: transparent !important; color: white;"><sup style="color: white;">*</sup>Equal contribution&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span class="author-block" style="background: transparent !important; color: white;"><sup style="color: white;">†</sup>Project lead&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <span class="author-block" style="background: transparent !important; color: white;"><sup style="color: white;">✉</sup>Corresponding author</span>
+      </div>
+  
+      
+      <div class="column has-text-centered">
+          <div class="publication-links">
+            <!-- PDF Link. -->
+            <span class="link-block">
+              <a href="https://arxiv.org/pdf/2509.01232"
+                 class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                    <i class="fas fa-file-pdf"></i>
+                </span>
+                <span>Paper</span>
+              </a>
+            </span>
+            <span class="link-block">
+              <a href="https://arxiv.org/abs/2509.01232"
+                 class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                </span>
+                <span>arXiv</span>
+              </a>
+            </span>
+            <!-- Code Link. -->
+            <span class="link-block">
+              <a href="https://github.com/Fantasy-AMAP/fantasy-hsi"
+                 class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                    <i class="fab fa-github"></i>
+                </span>
+                <span>Code</span>
+                </a>
+            </span>
+      </div>
+    </div>
+  </section>
+
+<section class="section" style="margin-top: 5rem;">
+  <div class="container is-max-desktop">
+    <!-- 使用 video 标签播放本地视频 -->
+    <video controls autoplay muted loop playsinline style="width: 100%; height: auto; border-radius: 8px;">
+      <source src="assets/first_video_audio.mp4" type="video/mp4">
+      您的浏览器不支持 video 标签。
+    </video>
+    
+    <div class="columns is-vcentered" style="margin-top: 2rem;">
+        <div class="content has-text-justified">
+          <p>
+            Human-Scene Interaction (HSI) seeks to generate realistic human behaviors within complex environments, yet it faces significant challenges in handling long-horizon, high-level tasks and generalizing to unseen scenes. To address these limitations, we introduce FantasyHSI, a novel HSI framework centered on video generation and multi-agent systems that operates without paired data. We model the complex interaction process as a dynamic directed graph, upon which we build a collaborative multi-agent system. This system comprises a scene navigator agent for environmental perception and high-level path planning, and a planning agent that decomposes long-horizon goals into atomic actions. Critically, we introduce a critic agent that establishes a closed-loop feedback mechanism by evaluating the deviation between generated actions and the planned path. This allows for the dynamic correction of trajectory drifts caused by the stochasticity of the generative model, thereby ensuring long-term logical consistency. To enhance the physical realism of the generated motions, we leverage Direct Preference Optimization (DPO) to train the action generator, significantly reducing artifacts such as limb distortion and foot-sliding. Extensive experiments on our custom SceneBench benchmark demonstrate that FantasyHSI significantly outperforms existing methods in terms of generalization, long-horizon task completion, and physical realism.
+          </p>
+        </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" >
+  <div class="container is-max-desktop" style="margin-top: -3rem;">
+    <h2 class="title is-3">Overview</h2>
+    <div class="container" style="max-width: 100%;">
+      <img src="./assets/overview.png" alt="Full Body">
+      <!-- <div id="results-carousel" class="carousel results-carousel"> -->
+        <!-- <div class="item item-fullbody"> -->
+          <!-- <img src="./static/arxiv_method.jpg" alt="Full Body"> -->
+        <!-- </div> -->
+        <!--  -->
+      <!-- </div> -->
+    </div>
+
+    <div class="columns is-centered has-text-centered", style="margin-top: 2rem;">
+      <div class="column is-full-width">
+        <div class="content has-text-justified">
+          <p>
+            In this work, we presented FantasyHSI, a novel framework for synthesizing expressive and physically plausible humanscene interactions in complex 3D environments. By reformulating HSI as a dynamic directed graph, we established an interpretable structure for modeling long-horizon interactions. The integrated VLM-based multi-agent collaboration comprise scene understanding, hierarchical planning, and trajectory correction. Furthermore, our reinforcement learning-based optimization of video diffusion models ensures that synthesized motions adhere to physical laws, eliminating artifacts such as foot sliding and body-scene penetration. Experiments show that FantasyHSI surpasses existing methods in generalization to unseen scenes and long-horizon tasks while maintaining motion realism and logical coherence.        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" >
+  <div class="container is-max-desktop" style="margin-top: -3rem;">
+    <h2 class="title is-3">Method</h2>
+    <div class="container" style="max-width: 100%;">
+      <img src="./assets/framework.png" alt="Full Body">
+      <!-- <div id="results-carousel" class="carousel results-carousel"> -->
+        <!-- <div class="item item-fullbody"> -->
+          <!-- <img src="./static/arxiv_method.jpg" alt="Full Body"> -->
+        <!-- </div> -->
+        <!--  -->
+      <!-- </div> -->
+    </div>
+    <div class="columns is-centered has-text-centered", style="margin-top: 2rem;">
+      <div class="column is-full-width">
+        <div class="content has-text-justified">
+          <p>
+            We introduce FantasyHSI, a novel framework that generates dynamic 4D sequences of humans interacting with their
+            3D environment. As illustrated on the left, FantasyHSI operates based on high-level task instruction, enabling it to autonomously
+            plan paths, traverse obstacles, and execute a variety of complex motions, such as climbing a ladder. Moreover, the right side of
+            the figure illustrates FantasyHSI's ability to generalize to arbitrary scenes and a variety of actions.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop" style="margin-top: -3rem;">
+    <h2 class="title is-3">Comparison with SOTA methods</h2>
+    <div class="container" style="max-width: 100%;">
+      <video autoplay controls muted loop 
+             style="width: 100%; height: auto; object-fit: contain;">
+        <source src="./assets/对比实验.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <div class="columns is-centered has-text-centered" style="margin-top: 2rem;">
+      <div class="column is-full-width">
+        <div class="content has-text-justified">
+          <p>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop" style="margin-top: -3rem;">
+    <h2 class="title is-3">Abaltion Results</h2>
+    <div class="container" style="max-width: 100%;">
+      <video autoplay controls muted loop 
+             style="width: 100%; height: auto; object-fit: contain;">
+        <source src="./assets/ablation.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <div class="columns is-centered has-text-centered" style="margin-top: 2rem;">
+      <div class="column is-full-width">
+        <div class="content has-text-justified">
+          <p>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop" style="margin-top: -3rem;">
+    <h2 class="title is-3">Character Binding</h2>
+    <div class="container" style="max-width: 100%;">
+      <video autoplay controls muted loop 
+             style="width: 100%; height: auto; object-fit: contain;">
+        <source src="./assets/juesemoxing.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <div class="columns is-centered has-text-centered" style="margin-top: 1rem;">
+      <div class="column is-full-width">
+        <div class="content has-text-justified">
+          <p>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@misc{mu2025fantasyhsivideogenerationcentric4dhuman,
+      title={FantasyHSI: Video-Generation-Centric 4D Human Synthesis In Any Scene through A Graph-based Multi-Agent Framework}, 
+      author={Lingzhou Mu and Qiang Wang and Fan Jiang and Mengchao Wang and Yaqi Fan and Mu Xu and Kai Zhang},
+      year={2025},
+      eprint={2509.01232},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2509.01232}, 
+}</code></pre>
+  </div>
+</section>
+
+
+
+<!-- <footer style="text-align: center;">
+  Some images and audio are from <a
+            href="https://fudan-generative-vision.github.io/hallo3/#/">Hallo3</a>, <a
+            href="https://magicinfinite.github.io/">MagicInfinite</a>, <a
+            href="https://omnihuman-lab.github.io/">OmniHuman-1</a>. The webpage template was based on <a
+              href="https://github.com/nerfies/nerfies.github.io">nerfies</a>.
+</footer> -->
+
+
+</body>
+</html>
