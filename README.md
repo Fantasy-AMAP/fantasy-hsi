@@ -1,7 +1,7 @@
 # FantasyHSI: Video-Generation-Centric 4D Human Synthesis In Any Scene through A Graph-based Multi-Agent Framework
 
 [![Home Page](https://img.shields.io/badge/Project-FantasyHSI-blue.svg)](https://fantasy-amap.github.io/fantasy-hsi/)
-[![arXiv](https://img.shields.io/badge/Arxiv-2509.11255-b31b1b.svg?logo=arXiv)](https://arxiv.org/abs/2509.11255)
+[![arXiv](https://img.shields.io/badge/Arxiv-2509.01232-b31b1b.svg?logo=arXiv)](https://arxiv.org/abs/2509.01232)
 [![hf_paper](https://img.shields.io/badge/🤗-FantasyHSI-red.svg)](https://huggingface.co/papers/2508.11255)
 
 ## Abstract
@@ -11,13 +11,13 @@ Human-Scene Interaction (HSI) seeks to generate realistic human behaviors within
 ## 🔗Citation
 If you find this repository useful, please consider giving a star ⭐ and citation
 ```
-@misc{wang2025fantasytalking2timesteplayeradaptivepreference,
+@misc{mu2025fantasyhsivideogenerationcentric4dhuman,
       title={FantasyHSI: Video-Generation-Centric 4D Human Synthesis In Any Scene through A Graph-based Multi-Agent Framework}, 
       author={Lingzhou Mu and Qiang Wang and Fan Jiang and Mengchao Wang and Yaqi Fan and Mu Xu and Kai Zhang},
       year={2025},
-      eprint={2509.11255},
+      eprint={2509.01232},
       archivePrefix={arXiv},
       primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2508.11255}, 
+      url={https://arxiv.org/abs/2509.01232}, 
 }
 ```
